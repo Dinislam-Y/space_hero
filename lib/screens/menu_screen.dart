@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:space_hero/entities/player.dart';
 import 'package:space_hero/game_core/main_loop.dart';
 import 'package:space_hero/utilits/common_vars.dart';
 
@@ -12,13 +13,12 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  double axisY = 150;
-  double axisX = 150;
-
   late ReceivePort _receivePort;
   //получаем данные, что нам нужно обновиться
 
   late Isolate _isolateLoop;
+
+  late Player player;
 
   void startIsolateLoop() async {
     _receivePort = ReceivePort();
@@ -27,13 +27,7 @@ class _MenuScreenState extends State<MenuScreen> {
     _receivePort.listen((message) {
       //получаем данные из "isolateLoop", подключаем слушатель "listen"
 
-      setState(() {
-        axisX++;
-
-        if (axisX > 500) {
-          axisX = 0;
-        }
-      });
+      setState(() {});
     });
   }
 
@@ -43,16 +37,15 @@ class _MenuScreenState extends State<MenuScreen> {
       startIsolateLoop();
       //если игра была запущена впервые - запускаем изолят
       isFirstStartGame = false;
+      player = Player();
     }
+
+    player.update();
 
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: axisY,
-            left: axisX,
-            child: const Text('123'),
-          ),
+          player.build(),
         ],
       ),
     );
