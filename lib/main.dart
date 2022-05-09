@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'screens/menu_screen.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   //настраиваем правильную инициализации виджета
@@ -26,12 +28,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false, //убираем флажок справа наверху
-      home: Scaffold(
-        body: Center(
-          child: Text('Start'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      //убираем флажок справа наверху
+
+      home: MenuScreen(),
     );
   }
 }

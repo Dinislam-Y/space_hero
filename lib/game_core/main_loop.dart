@@ -1,10 +1,13 @@
+import 'dart:isolate';
+
 bool _running = true;
 
-void startLoop() {
+void mainLoop(SendPort sendPort) {
+  //sendPort - для того, чтобы отправлять данные в главный isolate
+
   const double _fps = 50;
   const double _milSecond = 1000;
   const double _updateTime = _fps / _milSecond;
-  double _updates = 0;
 
   Stopwatch _loopWatch = Stopwatch();
   _loopWatch.start();
@@ -12,14 +15,19 @@ void startLoop() {
   Stopwatch _timeWatch = Stopwatch();
   _timeWatch.start();
 
+  double _updates = 0;
+
   while (_running) {
     if (_loopWatch.elapsedMilliseconds > _updateTime) {
       _updates++;
       _loopWatch.reset();
+
+      sendPort.send(true);
+      //передаем, что нужно обновить свои виджеты
     }
   }
+
   if (_loopWatch.elapsedMilliseconds > _milSecond) {
-    print('${DateTime.now()} FPS: $_updates');
     _updates = 0;
     _loopWatch.reset();
   }
