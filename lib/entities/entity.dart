@@ -15,8 +15,8 @@ abstract class Entity {
     this.spriteName,
     //передаем имя
     [
-    this.entityX = 50,
-    this.entityY = 50,
+    this.entityX = 0,
+    this.entityY = 0,
   ]) {
     for (var i = 0; i < 4; i++) {
       sprites.add(Image.asset('assets/$spriteName$i.png'));

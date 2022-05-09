@@ -1,9 +1,8 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:space_hero/entities/player.dart';
 import 'package:space_hero/game_core/main_loop.dart';
-import 'package:space_hero/utilits/common_vars.dart';
+import 'package:space_hero/utilities/global_vars.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -18,36 +17,36 @@ class _MenuScreenState extends State<MenuScreen> {
 
   late Isolate _isolateLoop;
 
-  late Player player;
-
-  void startIsolateLoop() async {
+  void _startIsolateLoop() async {
     _receivePort = ReceivePort();
     _isolateLoop = await Isolate.spawn(mainLoop, _receivePort.sendPort);
 
     _receivePort.listen((message) {
       //получаем данные из "isolateLoop", подключаем слушатель "listen"
 
+      GlobalVars.currentScene.update();
+      //обновляем 50 раз в секунду
+
       setState(() {});
     });
   }
 
   @override
+  void initState() {
+    _startIsolateLoop();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _receivePort.close();
+    _isolateLoop.kill();
+    super.dispose();
+  }
+  //закрываем порт
+
+  @override
   Widget build(BuildContext context) {
-    if (isFirstStartGame) {
-      startIsolateLoop();
-      //если игра была запущена впервые - запускаем изолят
-      isFirstStartGame = false;
-      player = Player();
-    }
-
-    player.update();
-
-    return Scaffold(
-      body: Stack(
-        children: [
-          player.build(),
-        ],
-      ),
-    );
+    return GlobalVars.currentScene.buildScene();
   }
 }

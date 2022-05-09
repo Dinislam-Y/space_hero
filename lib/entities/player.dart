@@ -3,8 +3,8 @@ import 'package:space_hero/entities/entity.dart';
 
 class Player extends Entity {
   Player() : super('player') {
-    entityX = 50;
-    entityY = 50;
+    entityX = 100;
+    entityY = 150;
   }
 
   @override
@@ -18,9 +18,9 @@ class Player extends Entity {
 
   @override
   void move() {
-    entityX++;
-    if (entityX > 500) {
-      entityX = 0;
+    entityY++;
+    if (entityY > 500) {
+      entityY = 0;
     }
   }
 
