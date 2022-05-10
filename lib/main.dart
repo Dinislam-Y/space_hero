@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:space_hero/utilities/global_vars.dart';
 
 import 'screens/menu_screen.dart';
 
@@ -40,8 +41,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Game extends StatelessWidget {
+class Game extends StatefulWidget {
   const Game({Key? key}) : super(key: key);
+
+  @override
+  State<Game> createState() => _GameState();
+}
+
+class _GameState extends State<Game> {
+  @override
+  void didChangeDependencies() {
+    initGame(context);
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,4 +68,10 @@ class Game extends StatelessWidget {
       child: const MenuScreen(),
     );
   }
+
+  void initGame(BuildContext context) {
+    GlobalVars.screenWidth = MediaQuery.of(context).size.width;
+    GlobalVars.screenHeight = MediaQuery.of(context).size.height;
+  }
+  //получаем реальные размеры нашего экрана
 }
