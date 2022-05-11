@@ -15,6 +15,9 @@ class Player extends Entity {
   bool isMoveLeft = false;
   bool isMoveRight = false;
   final double _speedShip = 0.5;
+  bool isAcceleration = false;
+
+  get getAngle => _angle;
 
   @override
   Widget build() {
@@ -34,6 +37,9 @@ class Player extends Entity {
 
   @override
   void move() {
+    if (!isAcceleration) return;
+    //если не включен двигатель, то не двигаемся
+
     if (isMoveLeft) _degree -= 5;
     if (isMoveRight) _degree += 5;
     //вращения вокруг своей оси
@@ -45,13 +51,12 @@ class Player extends Entity {
     entityY -= cos(_degree * 0.0175) * _speedShip;
     //переднее направление
 
-    if (entityX < 0 || entityY < 0) {
+    if (entityX < 0) {
       entityX = 0;
+    }
+    if (entityY < 0) {
       entityY = 0;
     }
-    // if (entityY < 0) {
-    //   entityY = 0;
-    // }
     if (entityX > GlobalVars.screenWidth - 50) {
       entityX = GlobalVars.screenWidth - 50;
     }
