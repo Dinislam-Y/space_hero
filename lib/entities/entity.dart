@@ -8,6 +8,9 @@ abstract class Entity {
   //для отрисовки сущностей
   List sprites = [];
 
+  int currentSprite = 0;
+  int _currentTick = 0;
+
   Entity(
     this.spriteName,
   ) {
@@ -15,8 +18,21 @@ abstract class Entity {
       sprites.add(Image.asset('assets/$spriteName$i.png'));
     }
   }
+  void _animate() {
+    _currentTick++;
+    if (_currentTick > 15) {
+      currentSprite++;
+      _currentTick = 0;
+    }
+    if (currentSprite > 3) {
+      currentSprite = 0;
+    }
+  }
 
-  void update();
+  void update() {
+    _animate();
+    move();
+  }
 
   void move();
 

@@ -24,7 +24,7 @@ class Bullet extends Entity {
       left: entityX,
       child: Transform.rotate(
         angle: playAngle,
-        child: sprites.first,
+        child: sprites[currentSprite],
         //первый рисунок коробля
       ),
     );
@@ -34,10 +34,6 @@ class Bullet extends Entity {
   void move() {
     entityX += sin(playAngle) * _speedBullet;
     entityY -= cos(playAngle) * _speedBullet;
-  }
-
-  @override
-  void update() {
     if (entityY > GlobalVars.screenHeight ||
         entityX > GlobalVars.screenWidth ||
         entityX < 0 ||
@@ -45,6 +41,5 @@ class Bullet extends Entity {
       visible = false;
       //если отрисовка выходит за рамки нашего экрана - оно уничтожается
     }
-    move();
   }
 }

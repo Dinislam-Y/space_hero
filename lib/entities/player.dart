@@ -27,7 +27,7 @@ class Player extends Entity {
       child: visible
           ? Transform.rotate(
               angle: _angle,
-              child: sprites.first,
+              child: sprites[currentSprite],
             )
           //виджет вращение угла
 
@@ -67,10 +67,5 @@ class Player extends Entity {
     isMoveLeft = false;
     isMoveRight = false;
     //чтобы бесконечно не вращался
-  }
-
-  @override
-  void update() {
-    move();
   }
 }
