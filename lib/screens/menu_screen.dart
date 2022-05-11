@@ -12,13 +12,12 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  late ReceivePort _receivePort;
+  final ReceivePort _receivePort = ReceivePort();
   //получаем данные, что нам нужно обновиться
 
-  late Isolate _isolateLoop;
+  late final Isolate _isolateLoop;
 
   void _startIsolateLoop() async {
-    _receivePort = ReceivePort();
     _isolateLoop = await Isolate.spawn(mainLoop, _receivePort.sendPort);
 
     _receivePort.listen((message) {

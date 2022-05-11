@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
 
 abstract class Entity {
-  double entityX;
-  double entityY;
-
-  String spriteName;
-
+  double entityX = 0;
+  double entityY = 0;
+  final String spriteName;
   bool visible = true;
   //для отрисовки сущностей
-
   List sprites = [];
 
   Entity(
     this.spriteName,
-    //передаем имя
-    [
-    this.entityX = 0,
-    this.entityY = 0,
-  ]) {
+  ) {
     for (var i = 0; i < 4; i++) {
       sprites.add(Image.asset('assets/$spriteName$i.png'));
     }
